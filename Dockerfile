@@ -1,23 +1,17 @@
-FROM centos:centos7
-MAINTAINER "Razvan Chitu" <razvan.chitu@eaudeweb.ro>
+FROM eeacms/centos:7s
 MAINTAINER "Alin Voinea" <alin.voinea@eaudeweb.ro>
 
 ENV ZEO_HOME=/opt/zeoserver
 
-RUN yum updateinfo && \
-    yum install -y \
-        make \
-        gcc \
-        gcc-c++ \
-        python \
-        python-devel && \
-    yum clean all && \
-    mkdir -p $ZEO_HOME
+RUN curl https://bootstrap.pypa.io/get-pip.py | python3.4 && \
+    pip3 install chaperone
+
+RUN mkdir -p $ZEO_HOME
 
 COPY src/base.cfg           $ZEO_HOME/base.cfg
 COPY src/bootstrap.py       $ZEO_HOME/
-COPY src/start.sh           /usr/bin/start
 COPY src/configure.py       /configure.py
+COPY src/chaperone.conf     /etc/chaperone.d/chaperone.conf
 
 WORKDIR $ZEO_HOME
 
@@ -31,4 +25,5 @@ VOLUME $ZEO_HOME/var/
 
 USER zope-www
 
-CMD ["start"]
+ENTRYPOINT ["/usr/bin/chaperone"]
+CMD ["--user", "zope-www"]
