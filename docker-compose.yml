@@ -12,5 +12,6 @@ data:
   tty: true
   stdin_open: true
   volumes:
-  - /opt/zeoserver/var
+  - /opt/zeoserver/var/filestorage
+  - /opt/zeoserver/var/blobstorage
   command: ["chown", "-v", "-R", "500:500", "/opt/zeoserver/var"]
