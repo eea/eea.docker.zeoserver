@@ -11,7 +11,7 @@ RUN mkdir -p $ZEO_HOME
 COPY src/base.cfg           $ZEO_HOME/base.cfg
 COPY src/bootstrap.py       $ZEO_HOME/
 COPY src/configure.py       /configure.py
-COPY src/docker-setup.sh           /docker-setup.sh
+COPY src/docker-setup.sh    /docker-setup.sh
 COPY src/chaperone.conf     /etc/chaperone.d/chaperone.conf
 
 WORKDIR $ZEO_HOME
