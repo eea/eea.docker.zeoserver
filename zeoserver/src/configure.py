@@ -1,5 +1,7 @@
 import os
 
+ZEO_HOME=os.environ.get('ZEO_HOME', '/opt/zeoserver')
+
 header = """\
 [buildout]
 extends = base.cfg
@@ -44,5 +46,6 @@ if configuration:
 """
 
 if extra_buildout_configuration or configuration:
-    buildout = open("/opt/zeoserver/buildout.cfg", "w")
+    path = os.path.join(ZEO_HOME, 'buildout.cfg')
+    buildout = open(path, "w")
     print >> buildout, header + configuration,
